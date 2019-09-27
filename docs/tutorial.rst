@@ -137,20 +137,6 @@ required data into a model.
     Then we will find two people in "Silly Walks"
      But we will find one person in "Beer Cans"
 
-The table is available to the Python step code as the ".table" attribute
-in the :class:`~behave.runner.Context` variable passed into each step
-function. The table for the example above could be accessed like so:
-
-.. code-block:: python
-
-    @given('a set of specific users')
-    def step_impl(context):
-        for row in context.table:
-            model.add_user(name=row['name'], department=row['department'])
-
-There's a variety of ways to access the table data - see the
-:class:`~behave.model.Table` API documentation for the full details.
-
 
 .. _`controlling things with tags`:
 
@@ -195,23 +181,6 @@ Tag selection on the command-line may be combined:
 
 * ``--tags="@wip and @slow"``
    This will select all the cases tagged *both* "wip" and "slow".
-
-If a feature or scenario is tagged and then skipped because of a
-command-line control then the *before_* and *after_* environment functions
-will not be called for that feature or scenario. Note that *behave* has
-additional support specifically for testing `works in progress`_.
-
-The tags attached to a feature and scenario are available in
-the environment functions via the "feature" or "scenario" object passed to
-them. On those objects there is an attribute called "tags" which is a list
-of the tag names attached, in the order they're found in the features file.
-
-There are also `environmental controls`_ specific to tags, so in the above
-example *behave* will attempt to invoke an ``environment.py`` function
-``before_tag`` and ``after_tag`` before and after the Scenario tagged
-``@slow``, passing in the name "slow". If multiple tags are present then
-the functions will be called multiple times with each tag in the order
-they're defined in the feature file.
 
 Re-visiting the example from above; if only some of the features required a
 browser and web server then you could tag them ``@fixture.browser``:
